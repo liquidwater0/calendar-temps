@@ -1,0 +1,17 @@
+.input {
+    font-size: 1em;
+    text-align: center;
+    background-color: inherit;
+    color: inherit;
+    font-weight: inherit;
+    border: none;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        display: none;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}

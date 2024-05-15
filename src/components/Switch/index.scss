@@ -1,0 +1,32 @@
+.switch {
+    --outline-thickness: 0.35rem;
+    --switch-width: 3rem;
+    --switch-height: 1rem;
+
+    position: relative;
+    background-color: transparent;
+    outline: var(--outline-thickness) solid hsl(200, 50%, 50%);
+    width: var(--switch-width);
+    height: var(--switch-height);
+    border-radius: 1000rem;
+    border: none;
+    cursor: pointer;
+
+    &[data-checked="true"]::after {
+        translate: calc(var(--switch-width) - var(--switch-height)) 0;
+    }
+
+    &[data-checked="false"]::after {
+        translate: 0 0;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        background-color: hsl(0, 50%, 50%);
+        width: var(--switch-height);
+        inset: 0;
+        border-radius: 1000rem;
+        transition: translate 150ms;
+    }
+}

@@ -1,7 +1,9 @@
 import "./scss/App.scss";
 import { useState } from 'react';
+// import useFirstRenderEffect from "./hooks/useFirstRenderEffect";
 import Input from "./components/Input";
 import Switch from "./components/Switch";
+// import convertTemp from "./utilities/convertTemp";
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] as const;
 
@@ -18,18 +20,30 @@ function App() {
 	const [unit, setUnit] = useState<UnitType>("F");
 	const [year, setYear] = useState<number>(new Date().getFullYear());
 	const [monthData, setMonthData] = useState<MonthDataType>(() => {
-		return [...MONTHS].reduce((monthsArray: MonthDataType, currentMonth) => {
-			return [
-				...monthsArray,
-				{
-					monthLabel: currentMonth,
-					date: 1,
-					high: unit === "F" ? 32 : 0,
-					low: unit === "F" ? 32 : 0
-				}
-			]
-		}, []);
+		return [...MONTHS].map((month) => {
+			return {
+				monthLabel: month,
+				date: 1,
+				high: unit === "F" ? 32 : 0,
+				low: unit === "F" ? 32 : 0
+			}
+		});
 	});
+
+	// useFirstRenderEffect(() => {
+	// 	setMonthData(month => {
+	// 		return [...month].map(m => {
+	// 			const highConverted = unit === "F" ? convertTemp(m.high, "C") : convertTemp(m.high, "F");
+	// 			const lowConverted = unit === "F" ? convertTemp(m.low, "C") : convertTemp(m.low, "F");
+
+	// 			return {
+	// 				...m,
+	// 				high: highConverted,
+	// 				low: lowConverted
+	// 			}
+	// 		});
+	// 	});
+	// }, [unit]);
 
 	function updateTempValue(
 		month: MonthType, 
@@ -68,6 +82,7 @@ function App() {
 					</label>
 					<Switch
 						id="unitSwitch"
+						checked={unit === "C"}
 						onUpdate={value => setUnit(value ? "C" : "F")}
 					/>
 					<label htmlFor="unitSwitch">

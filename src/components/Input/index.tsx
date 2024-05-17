@@ -1,5 +1,5 @@
 import "./index.scss";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { ChangeEvent, InputHTMLAttributes } from 'react';
 
 type ValueType = string | number;
@@ -14,7 +14,7 @@ export default function Input({ value, onUpdate, ...props }: InputProps) {
     const inputWidth = !inputValue ? "1ch" : `${[...inputValue.toString()].length}ch`;
 
     function handleChange({ target }: ChangeEvent<HTMLInputElement>) {
-        setInputValue(target.value || "");
+        setInputValue(target.value);
 
         if (onUpdate) {
             onUpdate(inputValue);
@@ -25,7 +25,7 @@ export default function Input({ value, onUpdate, ...props }: InputProps) {
         <input
             style={{ width: inputWidth }}
             className="input"
-            value={inputValue}
+            value={value}
             onChange={handleChange}
             { ...props }
         />
